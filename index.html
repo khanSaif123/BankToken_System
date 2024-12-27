@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Speack counter</title>
+    <script type="module">
+      import { Queue } from "./script.js";
+
+      // all refrence
+      let queueRef = document.querySelector(".queue");
+      let counterOneBtnRef = document.querySelector("#counter-one");
+      let counterTwoBtnRef = document.querySelector("#counter-two");
+      let counterThreeBtnRef = document.querySelector("#counter-three");
+      let counterOneRef = document.querySelector(".counter-1");
+      let counterTwoRef = document.querySelector(".counter-2");
+      let counterThreeRef = document.querySelector(".counter-3");
+
+      var tokens = new Queue();
+      var tokenNumber = 1;
+      var speech = new SpeechSynthesisUtterance();
+
+      // generate token
+      document.getElementById("getusername").addEventListener("click", () => {
+        let username = prompt("Enter customer name");
+        if(username === null){
+            return
+        }
+        tokens.enqueue(`${tokenNumber} [${username}]`);
+        alert("Token generated successfully");
+        loadTokens();
+        tokenNumber++;
+      });
+
+      // counter-one calling
+      counterOneBtnRef.addEventListener("click", () => {
+
+        const counterOneToggle = document.getElementById('toggle-btn-1');
+            if (!counterOneToggle.checked) { // If the toggle is unchecked
+                alert('Counter 1 is closed!');
+                return; // Stop further execution
+            }
+
+        counterOneRef.innerHTML = "";
+        if (tokens.size() === 0) {
+          alert("No customer left in queue");
+          return;
+        }
+
+        let getCustomer = tokens.dequeue();
+
+        // append the abouve customer inside the calling counter.
+        let opt = document.createElement("option");
+        opt.innerText = getCustomer;
+        counterOneRef.appendChild(opt);
+
+        // voice over
+        speech.text = `Token number ${opt.innerText} go to counter 1`;
+        window.speechSynthesis.speak(speech);
+        loadTokens();
+      });
+
+      // counter - 2 is calling
+      counterTwoBtnRef.addEventListener("click", () => {
+
+        // Check if the counter is open
+        const counterTwoToggle = document.getElementById('toggle-btn-2');
+            if (!counterTwoToggle.checked) { // If the toggle is unchecked
+                alert('Counter 2 is closed!');
+                return; // Stop further execution
+        }
+
+        counterTwoRef.innerHTML = "";
+        if (tokens.size() === 0) {
+          alert("No customer left in queue");
+          return;
+        }
+
+        let getCustomer = tokens.dequeue();
+        console.log(getCustomer);
+        let opt = document.createElement("option");
+        opt.innerHTML = getCustomer;
+        counterTwoRef.appendChild(opt);
+
+        loadTokens();
+        speech.text = `Token number ${opt.innerText} go to counter 2`;
+        window.speechSynthesis.speak(speech);
+      });
+
+      // counter -3 calling
+      counterThreeBtnRef.addEventListener("click", () => {
+
+        // Check if the counter is open
+        const counterThreeToggle = document.getElementById('toggle-btn-3');
+        if (!counterThreeToggle.checked) { // If the toggle is unchecked
+            alert('Counter 3 is closed!');
+            return; // Stop further execution
+        }
+
+        if(tokens.size() === 0){
+            alert("No customer left in queue");
+            return;
+        }
+
+        console.log("counter 3 calling");
+        let getCustomer = tokens.dequeue();
+
+        let opt = document.createElement("option");
+        opt.innerText = getCustomer;
+
+        counterThreeRef.appendChild(opt);
+        loadTokens();
+
+        speech.text = `Token number ${getCustomer} go to counter 3`;
+        window.speechSynthesis.speak(speech);
+      });
+
+      function loadTokens() {
+        queueRef.innerHTML = "";
+        for (var item of tokens.collection) {
+          var opt = document.createElement("option");
+          opt.innerText = item;
+          queueRef.appendChild(opt);
+        }
+      }
+
+      // Toggle Open/Close for each counter
+      document.querySelectorAll('input[type="checkbox"]').forEach((toggle, index) => {
+          toggle.addEventListener("change", function () {
+            const toggleText = document.getElementById(
+              `toggle-text-${index + 1}`
+            );
+            if (this.checked) {
+              toggleText.textContent = "Open"; 
+            } else {
+              toggleText.textContent = "Close"; 
+            }
+          });
+        });
+
+
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Bank Token System</h1>
+
+      <!-- conter -1 -->
+      <div class="counter">
+        <div class="counter-box">
+          <!-- Counter 1 -->
+          <div>
+            <input type="checkbox" id="toggle-btn-1" />
+            <label for="toggle-btn-1"></label>
+            <span id="toggle-text-1">Close</span>
+            <select size="2" class="counter-1"></select>
+
+            <div class="btn-div" style="width: 100%;">
+              <span>counter-1</span>
+              <button id="counter-one">Call Customer</button>
+            </div>
+          </div>
+
+          <!-- Counter 2 -->
+          <div>
+            <input type="checkbox" id="toggle-btn-2" />
+            <label for="toggle-btn-2"></label>
+            <span id="toggle-text-2">Close</span>
+            <select size="2" class="counter-2"></select>
+
+            <div class="btn-div" style="width: 100%;">
+              <span>counter-2</span>
+              <button id="counter-two">Call Customer</button>
+            </div>
+          </div>
+
+          <!-- Counter 3 -->
+          <div>
+            <input type="checkbox" id="toggle-btn-3" />
+            <label for="toggle-btn-3"></label>
+            <span id="toggle-text-3">Close</span>
+            <select size="2" class="counter-3"></select>
+
+            <div class="btn-div" style="width: 100%;">
+              <span>counter-3</span>
+              <button id="counter-three">Call Customer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- queue and token generator -->
+      <div class="generator">
+        <select size="2" class="queue"></select>
+
+        <button id="getusername">Generate Token</button>
+      </div>
+    </div>
+  </body>
+</html>

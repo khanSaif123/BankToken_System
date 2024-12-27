@@ -1,0 +1,223 @@
+/* General Reset and Body Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: #fff;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+/* Wrapper for the whole page */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Header styling */
+h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Counter box styling */
+.counter-box {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.counter-box div {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  width: 28%;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.counter-box div:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Toggle and Button styling */
+input[type="checkbox"] {
+  display: none;
+}
+
+label {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+label:hover {
+  background-color: #45a049;
+}
+
+span#toggle-text-1,
+span#toggle-text-2,
+span#toggle-text-3 {
+  font-size: 18px;
+  display: block;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #ff7e5f;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #feb47b;
+  transform: scale(1.05);
+}
+
+/* Counter select styling */
+select {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  background-color: #e3e3e3;
+}
+
+/* Queue and Token Generator Section */
+.generator {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.queue {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+  font-size: 18px;
+  border: none;
+  outline: none;
+}
+
+#generateToken {
+  background-color: #ff7e5f;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#generateToken:hover {
+  background-color: #feb47b;
+  transform: scale(1.05);
+}
+
+.btn-div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.btn-div span{
+    width: 200px;
+}
+
+/* Adding some responsiveness */
+@media (max-width: 768px) {
+  .counter-box {
+    flex-direction: column;
+  }
+
+  .counter-box div {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .generator {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-div{
+    width: 100%;
+  }
+
+ 
+}
+
+/* Hide default checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Create a toggle wrapper */
+label {
+  display: inline-block;
+  position: relative;
+  width: 50px; /* Width of the toggle */
+  height: 24px; /* Height of the toggle */
+  background-color: #ccc;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Circle inside the toggle */
+label::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+/* Change background and move circle when checked */
+input[type="checkbox"]:checked + label {
+  background-color: #4caf50; /* Active color */
+}
+
+input[type="checkbox"]:checked + label::after {
+  transform: translateX(26px); /* Move the circle */
+}
